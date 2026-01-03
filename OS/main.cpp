@@ -12,19 +12,28 @@ using namespace std;
  */
 int main() {
     Scheduler scheduler;
-
-    /*
-     * Process parameters:
-     * (PID, Arrival Time, Burst Time, Priority)
-     * Lower priority number = higher priority
-     */
-    scheduler.addProcess(make_shared<Process>(1, 0, 6, 2));
-    scheduler.addProcess(make_shared<Process>(2, 1, 4, 1));
-    scheduler.addProcess(make_shared<Process>(3, 2, 5, 3));
-    scheduler.addProcess(make_shared<Process>(4, 3, 3, 2));
-
+    int numProcesses;
+    cout << "How many processes do you have? ";
+    if (!(cin >> numProcesses)) {
+        cout << "Invalid input. Exiting." << endl;
+        return 1;
+    }
+    for (int i = 0; i < numProcesses; ++i) {
+        int pid, arrival, burst, priority;
+        cout << "\nEnter details for process " << i + 1 << ":" << endl;
+        cout << "Process ID: ";
+        cin >> pid;
+        cout << "Arrival Time: ";
+        cin >> arrival;
+        cout << "Burst Time: ";
+        cin >> burst;
+        cout << "Priority (lower number = higher priority): ";
+        cin >> priority;
+        scheduler.addProcess(make_shared<Process>(pid, arrival, burst, priority));
+    }
+    cout << "\nStarting dispatcher simulation...\n" << endl;
+    
     // Start dispatcher simulation
     scheduler.run();
-
     return 0;
 }
